@@ -15,7 +15,7 @@ require_once __DIR__ . '/../test/Library/ExampleClass.php';
 // Start the first 5 threads
 echo "Starting first 5 threads..\n";
 
-$threadIds = (new \PCNTL\ThreadStart)->start(
+$threadIds = (new \PCNTL\ThreadStart)->startMultiple(
     (new \PCNTL\ThreadCollection)
         ->add(new ExampleClass('Test 1'))
         ->add(new ExampleClass('Test 2'))
@@ -29,7 +29,7 @@ echo "In here, I am doing some other work.\n";
 
 // Then start some more threads
 echo "Starting some more threads...\n";
-$threadIds = array_merge($threadIds, (new \PCNTL\ThreadStart)->start(
+$threadIds = array_merge($threadIds, (new \PCNTL\ThreadStart)->startMultiple(
     (new \PCNTL\ThreadCollection)
         ->add(new ExampleClass('Test 6'))
         ->add(new ExampleClass('Test 7'))

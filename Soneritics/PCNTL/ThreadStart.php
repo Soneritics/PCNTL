@@ -2,6 +2,7 @@
 namespace PCNTL;
 
 use PCNTL\Exceptions\CreateForkException;
+use PCNTL\Interfaces\IThread;
 
 /**
  * Class ThreadStart
@@ -9,16 +10,22 @@ use PCNTL\Exceptions\CreateForkException;
 class ThreadStart
 {
     /**
-     * @var ThreadCollection
+     * @param IThread $thread
+     * @return int
+     * @throws CreateForkException
      */
-    private $threads;
-
-    /**
-     * ThreadStart constructor.
-     */
-    public function __construct()
+    public function start(IThread $thread): int
     {
-        $this->threads = new ThreadCollection;
+        $pid = pcntl_fork();
+
+        if ($pid === -1) {
+            throw new CreateForkException;
+        } elseif ($pid === 0) {
+            $thread->run();
+            exit;
+        }
+
+        return $pid;
     }
 
     /**
@@ -26,23 +33,13 @@ class ThreadStart
      * @return array
      * @throws CreateForkException
      */
-    public function start(ThreadCollection $threads): array
+    public function startMultiple(ThreadCollection $threads): array
     {
         $processIds = [];
 
         while (!$threads->empty()) {
             $thread = $threads->shift();
-            $this->threads->add($thread);
-            $pid = pcntl_fork();
-
-            if ($pid === -1) {
-                throw new CreateForkException;
-            } elseif ($pid === 0) {
-                $thread->run();
-                exit;
-            } else {
-                $processIds[] = $pid;
-            }
+            $processIds[] = $this->start($thread);
         }
 
         return $processIds;
@@ -54,8 +51,16 @@ class ThreadStart
      */
     public function startAndWait(ThreadCollection $threads): void
     {
-        $threadIds = $this->start($threads);
+        $threadIds = $this->startMultiple($threads);
+        $this->wait($threadIds);
+    }
 
+    /**
+     * Wait for threads to finish
+     * @param array $threadIds
+     */
+    public function wait(array $threadIds): void
+    {
         foreach ($threadIds as $threadId) {
             pcntl_waitpid($threadId, $status);
         }
