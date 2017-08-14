@@ -21,7 +21,30 @@ Helper method for working with forks.
 - tbd
 
 ### Example ###
-
+The following PHP code is a minimal example of one of the possibilities of this library.
 ```php
-echo 'tbd';
+(new \PCNTL\ThreadStart)->startAndWait(
+    (new \PCNTL\ThreadCollection)
+        ->add(new ExampleClass('Test 1'))
+        ->add(new ExampleClass('Test 2'))
+        ->add(new ExampleClass('Test 3'))
+        ->add(new ExampleClass('Test 4'))
+        ->add(new ExampleClass('Test 5'))
+);
+```
+
+Running multiple threads (forks), output will look like:
+```
+Starting
+Starting Test 1
+Starting Test 2
+Starting Test 3
+Starting Test 5
+Starting Test 4
+Ended Test 1
+Ended Test 3
+Ended Test 5
+Ended Test 2
+Ended Test 4
+Program is done.
 ```
