@@ -1,5 +1,5 @@
 <?php
-namespace PNCTL\Exceptions;
+namespace PCNTL\Exceptions;
 
 /**
  * Class CreateForkException

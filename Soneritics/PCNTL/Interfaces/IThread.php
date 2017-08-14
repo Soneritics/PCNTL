@@ -1,5 +1,5 @@
 <?php
-namespace PNCTL\Interfaces;
+namespace PCNTL\Interfaces;
 
 /**
  * Interface IThread

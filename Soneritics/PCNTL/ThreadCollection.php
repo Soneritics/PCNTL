@@ -1,7 +1,7 @@
 <?php
-namespace PNCTL;
+namespace PCNTL;
 
-use PNCTL\Interfaces\IThread;
+use PCNTL\Interfaces\IThread;
 
 /**
  * Class ThreadCollection

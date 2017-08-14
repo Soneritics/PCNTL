@@ -1,7 +1,7 @@
 <?php
-namespace PNCTL;
+namespace PCNTL;
 
-use PNCTL\Exceptions\CreateForkException;
+use PCNTL\Exceptions\CreateForkException;
 
 /**
  * Class ThreadStart
