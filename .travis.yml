@@ -1,0 +1,11 @@
+install: composer install --prefer-source --dev
+language: php
+php:
+- 7.1
+script:
+- vendor/bin/phpcs --standard=PSR1,PSR2 Soneritics/PCNTL/
+- mkdir -p build/logs
+- vendor/bin/phpunit --coverage-clover build/logs/clover.xml test/
+
+after_script:
+  - php vendor/bin/coveralls -v

@@ -1,0 +1,19 @@
+{
+    "name": "soneritics/pcntl",
+    "type": "library",
+    "description": "PCNTL helper methods",
+    "homepage": "https://github.com/Soneritics/PCNTL",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*",
+        "squizlabs/php_codesniffer": "dev-master",
+        "satooshi/php-coveralls": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {"PCNTL\\": "Soneritics/PCNTL/"}
+    }
+}
