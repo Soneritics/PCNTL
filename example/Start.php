@@ -1,8 +1,22 @@
 <?php
 /**
- * This example shows how to use the startAndWait method.
- * It starts multiple threads and waits until all are completed.
- * The program will resumeon the main thread when the threads are done.
+ * This example shows how to use the start method.
+ * It demonstrates that threads (forks) will live after the program has finished.
+ *
+ * Running this from the command line will have an output like:
+    Starting..
+    Starting Test 1
+    Starting Test 2
+    Starting Test 3
+    Starting Test 4
+    Program is done.
+
+    Starting Test 5
+    [user@server example]# Ended Test 4
+    Ended Test 3
+    Ended Test 2
+    Ended Test 1
+    Ended Test 5
  */
 
 // For this example without an Autoloader, load the necessary classes
@@ -12,11 +26,10 @@ require_once __DIR__ . '/../Soneritics/PCNTL/ThreadCollection.php';
 require_once __DIR__ . '/../Soneritics/PCNTL/ThreadStart.php';
 require_once __DIR__ . '/../test/Library/ExampleClass.php';
 
-// Echo the start of the program
-echo "Starting \n";
+// Start the first 5 threads
+echo "Starting..\n";
 
-// Example of the usage
-(new \PCNTL\ThreadStart)->startAndWait(
+(new \PCNTL\ThreadStart)->start(
     (new \PCNTL\ThreadCollection)
         ->add(new ExampleClass('Test 1'))
         ->add(new ExampleClass('Test 2'))
